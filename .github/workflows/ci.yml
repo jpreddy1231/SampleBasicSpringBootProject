@@ -27,8 +27,13 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
+          context: .
+          file: ./Dockerfile
           tags: "${{ vars.DOCKER_USER }}/docker-build-cloud-demo:latest"
           outputs: ${{ github.event_name == 'pull_request' && 'type=cacheonly' || 'type=registry' }}
+
+      - name: Echo Docker username  
+        run: echo "${{ vars.DOCKER_USER }}"
 
       - name: List files
         run: ls -l
