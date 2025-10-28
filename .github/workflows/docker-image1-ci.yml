@@ -17,7 +17,7 @@ jobs:
       contents: read
 
     env:
-      IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }} /my-image-name
+      IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/my-image-name
 
     steps:
       - name: Checkout repository
@@ -44,9 +44,9 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/my-image-name:latest
-            ${{ secrets.DOCKER_USERNAME }}/my-image-name:${{ github.sha }}
-            ${{ secrets.DOCKER_USERNAME }}/my-image-name:${{ github.ref_name }}
+            ${{ env.IMAGE_NAME }}:latest
+            ${{ env.IMAGE_NAME }}:${{ github.sha }}
+            
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
